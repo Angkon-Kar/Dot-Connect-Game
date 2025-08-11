@@ -101,7 +101,23 @@
         <button id="backToModeSelectionFromLobbyButton" class="button-primary bg-gray-500 hover:bg-gray-600 mt-6">Back</button>
     </div>
 
+    <!-- Game Board Screen -->
+    <div id="gameBoard" class="game-container hidden">
+        <div id="playerScoresContainer" class="flex justify-center items-center w-full mb-6 flex-wrap">
+            <!-- Player scores will be dynamically added here -->
+        </div>
 
+        <div class="flex items-center justify-center mb-6">
+            <span id="playerTurnIndicator" class="player-turn-indicator"></span>
+            <span id="currentPlayerText" class="text-xl font-semibold text-gray-800"></span>
+        </div>
+
+        <canvas id="gameCanvas" class="mb-6"></canvas>
+
+        <button id="goBackButton" class="button-primary">Go Back</button>
+    </div>
+
+    
 
 </body>
 </html>
