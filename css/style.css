@@ -10,3 +10,14 @@ body {
     box-sizing: border-box;
 }
 
+.game-container {
+    background-color: #ffffff;
+    border-radius: 1rem; /* Rounded corners */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    max-width: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
