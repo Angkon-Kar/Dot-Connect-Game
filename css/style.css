@@ -30,3 +30,7 @@ canvas {
     touch-action: none; /* Prevent default touch actions like scrolling */
 }
 
+.dot {
+    background-color: #4a5568; /* Darker gray for dots */
+    border-radius: 50%;
+}
