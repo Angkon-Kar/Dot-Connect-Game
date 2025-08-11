@@ -75,6 +75,31 @@
             </div>
             <button id="createGameButton" class="button-primary w-full max-w-xs">Create Game</button>
         </div>
+        <button id="refreshGamesButton" class="button-primary bg-blue-500 hover:bg-blue-600 w-full max-w-xs">Refresh Games</button>
+
+        <h2 class="text-2xl font-semibold text-gray-700 mt-6">Available Games</h2>
+        <table class="lobby-table">
+            <thead>
+                <tr>
+                    <th>Game ID</th>
+                    <th>Players</th>
+                    <th>Size</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="availableGamesList">
+                <!-- Games will be listed here -->
+                <tr><td colspan="5" class="text-center text-gray-500">No games available. Create one!</td></tr>
+            </tbody>
+        </table>
+
+        <div id="activeGamesContainer">
+            <!-- Active games will be loaded here -->
+        </div>
+
+        <button id="backToModeSelectionFromLobbyButton" class="button-primary bg-gray-500 hover:bg-gray-600 mt-6">Back</button>
+    </div>
 
 
 
