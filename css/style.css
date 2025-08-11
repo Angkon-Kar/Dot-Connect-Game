@@ -25,5 +25,8 @@ body {
 canvas {
     background-color: #f8faff; /* Lighter background for canvas */
     border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    display: block;
+    touch-action: none; /* Prevent default touch actions like scrolling */
 }
 
