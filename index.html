@@ -10,7 +10,15 @@
 
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    
+    <!-- Mode selection Screen -->
+     <div id="modeSelection" class="game-container flex flex-col items-center space-y-6">
+        <h1 class="text-4xl font-bold text-gray-800 mb-6">Dot Connect</h1>
+        <p id="currentUserId" class="text-sm text-gray-600 mb-4">Your ID: Loading...</p>
+
+        <button id="localPlayButton" class="button-primary w-full max-w-xs">Local Multiplayer</button>
+        <button id="onlinePlayButton" class="button-primary w-full max-w-xs">Online Multiplayer</button>
+        <button id="aiPlayButton" class="button-primary w-full max-w-xs">Player vs AI</button>
+     </div>
     
 </body>
 </html>
