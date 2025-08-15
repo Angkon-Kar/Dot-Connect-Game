@@ -45,3 +45,11 @@ const playerLineColors = [
     '#a855f7'   // Player 4 Purple
 ];
 
+// Initialize game
+window.onload = function() {
+    canvas = document.getElementById('gameCanvas');
+    ctx = canvas.getContext('2d');
+    window.addEventListener('resize', resizeCanvas);
+    showModeSelectionScreen(); // Start with mode selection
+};
+
