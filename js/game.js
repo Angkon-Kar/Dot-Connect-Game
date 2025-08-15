@@ -103,3 +103,21 @@ function drawDots() {
     }
 }
 
+function drawLines() {
+    ctx.lineWidth = lineThickness;
+    ctx.lineCap = 'round';
+
+    for (let r = 0; r < numRows; r++) {
+        for (let c = 0; c < numCols - 1; c++) {
+            const playerNum = horizontalLines[r] && horizontalLines[r][c];
+            if (playerNum > 0) { // Player numbers are 1-based
+                ctx.strokeStyle = playerLineColors[playerNum - 1];
+                ctx.beginPath();
+                ctx.moveTo(padding + c * cellSize + dotRadius, padding + r * cellSize);
+                ctx.lineTo(padding + (c + 1) * cellSize - dotRadius, padding + r * cellSize);
+                ctx.stroke();
+            }
+        }
+    }
+
+}
