@@ -53,3 +53,29 @@ window.onload = function() {
     showModeSelectionScreen(); // Start with mode selection
 };
 
+// Resize canvas to fit window
+function resizeCanvas() {
+    const currentRows = numRows || parseInt(document.getElementById('gridRows').value);
+    const currentCols = numCols || parseInt(document.getElementById('gridCols').value);
+
+    canvas.width = (currentCols - 1) * cellSize + 2 * padding;
+    canvas.height = (currentRows - 1) * cellSize + 2 * padding;
+
+    const containerWidth = document.getElementById('gameBoard').clientWidth - (2 * parseFloat(getComputedStyle(document.getElementById('gameBoard')).paddingLeft));
+    const containerHeight = document.getElementById('gameBoard').clientHeight - (2 * parseFloat(getComputedStyle(document.getElementById('gameBoard')).paddingTop));
+
+    const aspectRatio = canvas.width / canvas.height;
+
+    if (canvas.width > containerWidth || canvas.height > containerHeight) {
+        if (containerWidth / aspectRatio < containerHeight) {
+            canvas.width = containerWidth;
+            canvas.height = containerWidth / aspectRatio;
+        } else {
+            canvas.height = containerHeight;
+            canvas.width = containerHeight * aspectRatio;
+        }
+    }
+    if (gameActive) {
+        drawGame();
+    }
+}
