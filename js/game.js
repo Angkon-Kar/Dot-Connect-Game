@@ -79,3 +79,14 @@ function resizeCanvas() {
         drawGame();
     }
 }
+
+function drawGame() {
+    if (!ctx || !gameActive || !boxes || boxes.length === 0) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawBoxes();
+    drawLines();
+    drawDots();
+}
+
