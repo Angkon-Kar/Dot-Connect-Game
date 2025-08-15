@@ -19,3 +19,29 @@ let onlineGameId = null; // For online games
 let onlinePlayerNumber = null; // 1-based index (1, 2, 3, 4) for the current user in online games
 let unsubscribeSnapshot = null; // To unsubscribe from Firestore listener
 
+// Player colors mapping (CSS class names)
+const playerColors = [
+    'player-color-1', // Player 1
+    'player-color-2', // Player 2
+    'player-color-3', // Player 3
+    'player-color-4'  // Player 4
+];
+const playerTextColors = [
+    'player-text-1',
+    'player-text-2',
+    'player-text-3',
+    'player-text-4'
+];
+const playerFillColors = [
+    'rgba(59, 130, 246, 0.3)', // Player 1 Blue
+    'rgba(239, 68, 68, 0.3)',  // Player 2 Red
+    'rgba(34, 197, 94, 0.3)',  // Player 3 Green
+    'rgba(168, 85, 247, 0.3)'  // Player 4 Purple
+];
+const playerLineColors = [
+    '#3b82f6', // Player 1 Blue
+    '#ef4444',  // Player 2 Red
+    '#22c55e',  // Player 3 Green
+    '#a855f7'   // Player 4 Purple
+];
+
