@@ -120,4 +120,17 @@ function drawLines() {
         }
     }
 
+    for (let r = 0; r < numRows - 1; r++) {
+        for (let c = 0; c < numCols; c++) {
+            const playerNum = verticalLines[r] && verticalLines[r][c];
+            if (playerNum > 0) { // Player numbers are 1-based
+                ctx.strokeStyle = playerLineColors[playerNum - 1];
+                ctx.beginPath();
+                ctx.moveTo(padding + c * cellSize, padding + r * cellSize + dotRadius);
+                ctx.lineTo(padding + c * cellSize, padding + (r + 1) * cellSize - dotRadius);
+                ctx.stroke();
+            }
+        }
+    }
+
 }
