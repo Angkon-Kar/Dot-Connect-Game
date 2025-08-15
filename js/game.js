@@ -151,3 +151,26 @@ function drawBoxes() {
         }
     }
 }
+
+function checkForBoxes() {
+    let boxesFormedThisTurn = 0;
+    const currentPlayerNumber = currentPlayerIndex + 1; // 1-based player number
+
+    for (let r = 0; r < numRows - 1; r++) {
+        for (let c = 0; c < numCols - 1; c++) {
+            if (boxes[r][c] === 0) {
+                const top = horizontalLines[r] && horizontalLines[r][c];
+                const bottom = horizontalLines[r + 1] && horizontalLines[r + 1][c];
+                const left = verticalLines[r] && verticalLines[r][c];
+                const right = verticalLines[r] && verticalLines[r][c + 1];
+
+                if (top !== 0 && bottom !== 0 && left !== 0 && right !== 0) {
+                    boxes[r][c] = currentPlayerNumber; // Assign ownership
+                    players[currentPlayerIndex].score++;
+                    boxesFormedThisTurn++;
+                }
+            }
+        }
+    }
+    return boxesFormedThisTurn;
+}
