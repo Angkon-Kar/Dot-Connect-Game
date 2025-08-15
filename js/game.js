@@ -90,3 +90,16 @@ function drawGame() {
     drawDots();
 }
 
+function drawDots() {
+    ctx.fillStyle = '#4a5568';
+    for (let r = 0; r < numRows; r++) {
+        for (let c = 0; c < numCols; c++) {
+            const x = padding + c * cellSize;
+            const y = padding + r * cellSize;
+            ctx.beginPath();
+            ctx.arc(x, y, dotRadius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+}
+
