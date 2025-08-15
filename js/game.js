@@ -134,3 +134,20 @@ function drawLines() {
     }
 
 }
+
+function drawBoxes() {
+    for (let r = 0; r < numRows - 1; r++) {
+        for (let c = 0; c < numCols - 1; c++) {
+            const playerNum = boxes[r] && boxes[r][c];
+            if (playerNum > 0) { // Player numbers are 1-based
+                ctx.fillStyle = playerFillColors[playerNum - 1];
+                ctx.fillRect(
+                    padding + c * cellSize + lineThickness / 2,
+                    padding + r * cellSize + lineThickness / 2,
+                    cellSize - lineThickness,
+                    cellSize - lineThickness
+                );
+            }
+        }
+    }
+}
