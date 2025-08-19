@@ -174,3 +174,7 @@ function checkForBoxes() {
     }
     return boxesFormedThisTurn;
 }
+
+function switchPlayer() {
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+}
