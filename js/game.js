@@ -236,3 +236,17 @@ function checkGameOver() {
     }
     return false; // Game is not over
 }
+
+function updateScoreDisplays() {
+    const playerScoresContainer = document.getElementById('playerScoresContainer');
+    playerScoresContainer.innerHTML = ''; // Clear previous scores
+    players.forEach((player, index) => {
+        const scoreItem = document.createElement('div');
+        scoreItem.className = `player-score-item flex flex-col items-center`;
+        scoreItem.innerHTML = `
+            <span class="text-3xl font-bold ${playerTextColors[index]}">${player.score}</span>
+            <span class="text-lg text-gray-700">${player.name}</span>
+        `;
+        playerScoresContainer.appendChild(scoreItem);
+    });
+}
