@@ -178,3 +178,61 @@ function checkForBoxes() {
 function switchPlayer() {
     currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
 }
+
+function checkGameOver() {
+    let totalLines = (numRows * (numCols - 1)) + ((numRows - 1) * numCols);
+    let drawnLines = 0;
+
+    for (let r = 0; r < numRows; r++) {
+        for (let c = 0; c < numCols - 1; c++) {
+            if (horizontalLines[r] && horizontalLines[r][c] !== 0) drawnLines++;
+        }
+    }
+    for (let r = 0; r < numRows - 1; r++) {
+        for (let c = 0; c < numCols; c++) {
+            if (verticalLines[r] && verticalLines[r][c] !== 0) drawnLines++;
+        }
+    }
+
+    if (drawnLines === totalLines) {
+        gameActive = false;
+        let message = '';
+        // Determine winner(s)
+        let maxScore = -1;
+        players.forEach(p => {
+            if (p.score > maxScore) {
+                maxScore = p.score;
+            }
+        });
+
+        const winners = players.filter(p => p.score === maxScore);
+        if (winners.length === 1) {
+            message = `${winners[0].name} wins with ${maxScore} points!`;
+        } else {
+            const winnerNames = winners.map(p => p.name).join(' and ');
+            message = `It's a tie between ${winnerNames} with ${maxScore} points!`;
+        }
+
+        document.getElementById('gameOverMessage').textContent = message;
+        document.getElementById('playAgainButton').textContent = gameMode === 'online' ? 'Back to Lobby' : 'Play Again';
+        document.getElementById('gameOverModal').classList.remove('hidden');
+
+        if (gameMode === 'online' && onlineGameId) {
+            // Prepare final scores for Firebase
+            const finalScores = {};
+            players.forEach((p, index) => {
+                finalScores[`player${index + 1}Score`] = p.score;
+                finalScores[`player${index + 1}Name`] = p.name;
+            });
+
+            updateDoc(doc(window.firebaseDb, `artifacts/${window.appId}/public/data/games`, onlineGameId), {
+                status: 'finished',
+                winner: winners.map(p => p.name).join(', '),
+                ...finalScores, // Spread final scores
+                lastUpdated: new Date().toISOString()
+            }).catch(e => console.error("Error updating game status:", e));
+        }
+        return true; // Game is over
+    }
+    return false; // Game is not over
+}
