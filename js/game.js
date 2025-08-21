@@ -250,3 +250,21 @@ function updateScoreDisplays() {
         playerScoresContainer.appendChild(scoreItem);
     });
 }
+
+function updatePlayerTurnDisplay() {
+    const currentPlayer = players[currentPlayerIndex];
+    document.getElementById('currentPlayerText').textContent = `${currentPlayer.name} to move`;
+
+    // Remove all player text classes and add the current one
+    playerTextColors.forEach(cls => document.getElementById('currentPlayerText').classList.remove(cls));
+    document.getElementById('currentPlayerText').classList.add(playerTextColors[currentPlayerIndex]);
+
+    // Remove all player color classes and add the current one for indicator
+    playerColors.forEach(cls => document.getElementById('playerTurnIndicator').classList.remove(cls));
+    document.getElementById('playerTurnIndicator').classList.add(playerColors[currentPlayerIndex]);
+
+    // Trigger AI move if it's AI's turn
+    if (gameMode === 'ai' && currentPlayer.name === 'Computer' && gameActive) {
+        setTimeout(makeAIMove, 700);
+    }
+}
