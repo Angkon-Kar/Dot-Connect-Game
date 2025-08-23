@@ -113,3 +113,17 @@ canvas {
     align-items: center;
     margin: 0 10px; /* Spacing between player scores */
 }
+
+@media (max-width: 640px) {
+    .game-container {
+        padding: 1rem;
+    }
+    .input-field {
+        max-width: 100px;
+    }
+    .player-score-container {
+        flex-wrap: wrap; /* Allow scores to wrap on small screens */
+        justify-content: center;
+    }
+}
+
