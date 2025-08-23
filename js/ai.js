@@ -117,3 +117,24 @@ function makeAIMove() {
     }
 
 }
+
+function getAvailableMoves() {
+    const moves = [];
+    // Horizontal moves
+    for (let r = 0; r < numRows; r++) {
+        for (let c = 0; c < numCols - 1; c++) {
+            if (horizontalLines[r][c] === 0) {
+                moves.push({ type: 'h', r: r, c: c });
+            }
+        }
+    }
+    // Vertical moves
+    for (let r = 0; r < numRows - 1; r++) {
+        for (let c = 0; c < numCols; c++) {
+            if (verticalLines[r][c] === 0) {
+                moves.push({ type: 'v', r: r, c: c });
+            }
+        }
+    }
+    return moves;
+}
