@@ -90,3 +90,10 @@ canvas {
     border-collapse: collapse;
     margin-top: 1rem;
 }
+
+.lobby-table th, .lobby-table td {
+    border: 1px solid #e2e8f0;
+    padding: 0.75rem;
+    text-align: left;
+}
+
