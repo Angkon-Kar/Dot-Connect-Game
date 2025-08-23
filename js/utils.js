@@ -1,3 +1,4 @@
+// --- Custom Alert Function (replaces window.alert) ---
 function showCustomAlert(message, onConfirm = null, isConfirm = false) {
     document.getElementById('customAlertMessage').textContent = message;
     const confirmButton = document.createElement('button');
@@ -9,6 +10,7 @@ function showCustomAlert(message, onConfirm = null, isConfirm = false) {
     };
 
     const modalContent = document.getElementById('customAlertModal').querySelector('.bg-white');
+    // Clear previous buttons
     modalContent.querySelectorAll('.button-primary').forEach(btn => btn.remove());
     modalContent.appendChild(confirmButton);
 
@@ -72,7 +74,6 @@ function handleCanvasClick(event) {
         }
         if (lineDrawn) break;
     }
-
 
     // Check for vertical lines
     if (!lineDrawn) {
