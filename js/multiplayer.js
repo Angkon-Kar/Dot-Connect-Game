@@ -80,4 +80,79 @@ async function createOnlineGame() {
     }
 }
 
+async function fetchAvailableGames() {
+    if (!window.firebaseDb || !isAuthReady()) {
+        document.getElementById('availableGamesList').innerHTML = '<tr><td colspan="5" class="text-center text-gray-500">Loading Firebase...</td></tr>';
+        return;
+    }
+    document.getElementById('availableGamesList').innerHTML = '<tr><td colspan="5" class="text-center text-gray-500">Loading games...</td></tr>';
+
+    const gamesCol = collection(window.firebaseDb, `artifacts/${window.appId}/public/data/games`);
+    // Query for games that are waiting and have less than max players
+    const q = query(gamesCol, where("status", "==", "waiting"));
+
+    try {
+        const querySnapshot = await getDocs(q);
+        let gamesHtml = '';
+        let joinableGamesFound = false;
+
+        querySnapshot.forEach((doc) => {
+            const game = doc.data();
+            const gamePlayers = JSON.parse(game.players);
+            const currentPlayersCount = gamePlayers.filter(p => p.id !== null).length;
+
+            // Don't show games you created if they are already full or you are in them
+            if (gamePlayers.some(p => p.id === getUserId())) return;
+
+            if (currentPlayersCount < game.numPlayers) {
+                joinableGamesFound = true;
+                const playerNames = gamePlayers.map(p => p.name || 'Empty').join(', ');
+                gamesHtml += `
+                    <tr>
+                        <td>${doc.id}</td>
+                        <td>${playerNames}</td>
+                        <td>${game.gridRows}x${game.gridCols}</td>
+                        <td>${currentPlayersCount}/${game.numPlayers}</td>
+                        <td><button class="button-primary px-3 py-1 text-sm" onclick="joinOnlineGame('${doc.id}')">Join</button></td>
+                    </tr>
+                `;
+            }
+        });
+        document.getElementById('availableGamesList').innerHTML = gamesHtml || '<tr><td colspan="5" class="text-center text-gray-500">No joinable games available.</td></tr>';
+
+        // Also fetch and display active games for watching
+        const activeQ = query(gamesCol, where("status", "==", "active"));
+        const activeSnapshot = await getDocs(activeQ);
+        let activeGamesHtml = '';
+        if (!activeSnapshot.empty) {
+            activeGamesHtml += '<h2 class="text-2xl font-semibold text-gray-700 mt-6">Active Games (Watch)</h2>';
+            activeGamesHtml += '<table class="lobby-table"><thead><tr><th>Game ID</th><th>Players</th><th>Size</th><th>Action</th></tr></thead><tbody>';
+            activeSnapshot.forEach((doc) => {
+                const game = doc.data();
+                const gamePlayers = JSON.parse(game.players);
+                const playerNames = gamePlayers.map(p => p.name).join(' vs ');
+                activeGamesHtml += `
+                    <tr>
+                        <td>${doc.id}</td>
+                        <td>${playerNames}</td>
+                        <td>${game.gridRows}x${game.gridCols}</td>
+                        <td><button class="button-primary bg-yellow-500 hover:bg-yellow-600 px-3 py-1 text-sm" onclick="watchOnlineGame('${doc.id}')">Watch</button></td>
+                    </tr>
+                `;
+            });
+            activeGamesHtml += '</tbody></table>';
+        }
+        const activeGamesContainer = document.getElementById('activeGamesContainer');
+        if (activeGamesContainer) {
+            activeGamesContainer.innerHTML = activeGamesHtml;
+        }
+
+    } catch (e) {
+        console.error("Error fetching available games:", e);
+        document.getElementById('availableGamesList').innerHTML = '<tr><td colspan="5" class="text-center text-red-500">Error loading games.</td></tr>';
+    }
+}
+window.fetchAvailableGames = fetchAvailableGames;
+
+
 
