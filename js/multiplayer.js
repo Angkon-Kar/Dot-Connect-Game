@@ -236,5 +236,72 @@ async function watchOnlineGame(gameId) {
 }
 window.watchOnlineGame = watchOnlineGame;
 
+function listenToOnlineGame(gameId) {
+    if (unsubscribeSnapshot) {
+        unsubscribeSnapshot();
+    }
+
+    const gameDocRef = doc(window.firebaseDb, `artifacts/${window.appId}/public/data/games`, gameId);
+    unsubscribeSnapshot = onSnapshot(gameDocRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+            const gameData = docSnapshot.data();
+            console.log("Game data updated:", gameData);
+
+            // Update local game state from Firestore
+            numRows = gameData.gridRows;
+            numCols = gameData.gridCols;
+            horizontalLines = JSON.parse(gameData.horizontalLines);
+            verticalLines = JSON.parse(gameData.verticalLines);
+            boxes = JSON.parse(gameData.boxes);
+            players = JSON.parse(gameData.players); // Update players array
+            currentPlayerIndex = gameData.currentPlayerIndex;
+
+            // Update UI elements
+            updateScoreDisplays();
+            updatePlayerTurnDisplay();
+            drawGame();
+
+            if (gameData.status === 'finished') {
+                if (!document.getElementById('gameOverModal').classList.contains('hidden')) return;
+                gameActive = false;
+                let message = '';
+                // Re-calculate winner based on final scores in gameData
+                let maxScore = -1;
+                players.forEach(p => {
+                    if (p.score > maxScore) {
+                        maxScore = p.score;
+                    }
+                });
+
+                const winners = players.filter(p => p.score === maxScore);
+                if (winners.length === 1) {
+                    message = `${winners[0].name} wins with ${maxScore} points!`;
+                } else {
+                    const winnerNames = winners.map(p => p.name).join(' and ');
+                    message = `It's a tie between ${winnerNames} with ${maxScore} points!`;
+                }
+
+                document.getElementById('gameOverMessage').textContent = message;
+                document.getElementById('playAgainButton').textContent = 'Back to Lobby';
+                document.getElementById('gameOverModal').classList.remove('hidden');
+            } else if (gameData.status === 'waiting' && onlinePlayerNumber === 1 && gameData.currentPlayersCount > 1) {
+                // Player 2 (or more) joined your game
+                const newJoiner = players.find(p => p.id !== null && p.id !== getUserId());
+                if (newJoiner) {
+                     showCustomAlert(`${newJoiner.name} has joined the game!`);
+                }
+            }
+        } else {
+            showCustomAlert("The game you were in no longer exists.");
+            showOnlineLobby();
+        }
+    }, (error) => {
+        console.error("Error listening to game:", error);
+        showCustomAlert("Error syncing game data. Returning to lobby.");
+        showOnlineLobby();
+    });
+}
+
+
 
 
