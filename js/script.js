@@ -62,7 +62,7 @@ function updatePlayerNameInputs() {
 
 function showGameBoard() {
     hideAllScreens();
-    
+
     document.getElementById('gameBoard').classList.remove('hidden');
     gameActive = true;
     resizeCanvas();
@@ -71,7 +71,20 @@ function showGameBoard() {
     drawGame();
 }
 
-
+function handleGoBack() {
+    if (gameMode === 'online') {
+        if (onlineGameId) {
+            showCustomAlert('Leaving an online game will forfeit your progress. Are you sure?', () => {
+                leaveOnlineGame();
+                showOnlineLobby();
+            }, true);
+        } else {
+            showOnlineLobby();
+        }
+    } else {
+        showModeSelectionScreen();
+    }
+}
 
 
 
