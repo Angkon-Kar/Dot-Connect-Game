@@ -41,6 +41,26 @@ function showSetupScreen(mode) {
     updatePlayerNameInputs(); // Initialize player name inputs
 }
 
+function updatePlayerNameInputs() {
+    const numPlayers = parseInt(document.getElementById('numPlayersSelect').value);
+    const playerInputsContainer = document.getElementById('playerInputs');
+    playerInputsContainer.innerHTML = ''; // Clear existing inputs
+
+    for (let i = 0; i < numPlayers; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = `playerName${i + 1}`;
+        input.className = 'input-field';
+        input.value = `Player ${i + 1}`;
+        if (gameMode === 'ai' && i === 1) { // Player 2 is AI
+            input.value = 'Computer';
+            input.readOnly = true;
+        }
+        playerInputsContainer.appendChild(input);
+    }
+}
+
+
 
 
 
