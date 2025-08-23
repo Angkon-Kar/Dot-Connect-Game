@@ -128,5 +128,22 @@ function startGame() {
     }
 }
 
+// Event Listeners
+document.getElementById('localPlayButton').addEventListener('click', () => showSetupScreen('local'));
+document.getElementById('onlinePlayButton').addEventListener('click', showOnlineLobby);
+document.getElementById('aiPlayButton').addEventListener('click', () => showSetupScreen('ai'));
+document.getElementById('backToModeSelectionButton').addEventListener('click', showModeSelectionScreen);
+document.getElementById('backToModeSelectionFromLobbyButton').addEventListener('click', showModeSelectionScreen);
 
-
+document.getElementById('numPlayersSelect').addEventListener('change', updatePlayerNameInputs);
+document.getElementById('startGameButton').addEventListener('click', startGame);
+document.getElementById('goBackButton').addEventListener('click', handleGoBack);
+document.getElementById('playAgainButton').addEventListener('click', () => {
+    document.getElementById('gameOverModal').classList.add('hidden');
+    if (gameMode === 'online') {
+        showOnlineLobby();
+    } 
+    else {
+        startGame(); // Restart local/AI game with current settings
+    }
+});
