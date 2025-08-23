@@ -9,7 +9,6 @@ function showCustomAlert(message, onConfirm = null, isConfirm = false) {
     };
 
     const modalContent = document.getElementById('customAlertModal').querySelector('.bg-white');
-    // Clear previous buttons
     modalContent.querySelectorAll('.button-primary').forEach(btn => btn.remove());
     modalContent.appendChild(confirmButton);
 
@@ -24,3 +23,21 @@ function showCustomAlert(message, onConfirm = null, isConfirm = false) {
 }
 window.showCustomAlert = showCustomAlert;
 
+function handleCanvasClick(event) {
+    if (!gameActive) return;
+
+    // Determine if it's the current user's turn in online mode
+    if (gameMode === 'online') {
+        const currentPlayerId = players[currentPlayerIndex].id;
+        if (getUserId() !== currentPlayerId) {
+            showCustomAlert("It's not your turn!");
+            return;
+        }
+    }
+    // Prevent moves if it's AI's turn
+    if (gameMode === 'ai' && players[currentPlayerIndex].name === 'Computer') {
+        return;
+    }
+
+
+}
