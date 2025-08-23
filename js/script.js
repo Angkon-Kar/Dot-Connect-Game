@@ -86,7 +86,47 @@ function handleGoBack() {
     }
 }
 
+function startGame() {
+    const numPlayers = parseInt(document.getElementById('numPlayersSelect').value);
+    players = [];
+    for (let i = 0; i < numPlayers; i++) {
+        const nameInput = document.getElementById(`playerName${i + 1}`);
+        players.push({
+            id: gameMode === 'online' ? null : `localPlayer${i+1}`, // ID will be set for online later
+            name: nameInput.value.trim() || `Player ${i + 1}`,
+            score: 0,
+            colorClass: playerColors[i],
+            lineColor: playerLineColors[i],
+            fillColor: playerFillColors[i]
+        });
+    }
 
+    numRows = parseInt(document.getElementById('gridRows').value);
+    numCols = parseInt(document.getElementById('gridCols').value);
+
+    if (isNaN(numRows) || isNaN(numCols) || numRows < 2 || numCols < 2) {
+        showCustomAlert('Please enter valid grid dimensions (minimum 2x2).');
+        return;
+    }
+
+    horizontalLines = Array(numRows).fill(0).map(() => Array(numCols - 1).fill(0));
+    verticalLines = Array(numRows - 1).fill(0).map(() => Array(numCols).fill(0));
+    boxes = Array(numRows - 1).fill(0).map(() => Array(numCols - 1).fill(0));
+
+    currentPlayerIndex = 0; // First player starts (index 0)
+
+    onlineGameId = null;
+    onlinePlayerNumber = null;
+
+    showGameBoard();
+
+    updateScoreDisplays(); // Update all player scores
+    updatePlayerTurnDisplay();
+
+    if (gameMode === 'ai' && players[currentPlayerIndex].name === 'Computer') {
+        setTimeout(makeAIMove, 700);
+    }
+}
 
 
 
