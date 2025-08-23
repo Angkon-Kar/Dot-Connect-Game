@@ -25,3 +25,25 @@ function showModeSelectionScreen() {
     }
 }
 
+function showSetupScreen(mode) {
+    hideAllScreens();
+    document.getElementById('gameSetup').classList.remove('hidden');
+    gameMode = mode;
+    if (mode === 'local') {
+        document.getElementById('setupTitle').textContent = 'Local Game Setup';
+        document.getElementById('numPlayersSelect').value = '2'; // Default to 2 players for local
+        document.getElementById('numPlayersSelect').disabled = false;
+    } else if (mode === 'ai') {
+        document.getElementById('setupTitle').textContent = 'Player vs AI Setup';
+        document.getElementById('numPlayersSelect').value = '2'; // AI is always 2 players (1 human, 1 AI)
+        document.getElementById('numPlayersSelect').disabled = true; // Cannot change number of players for AI mode
+    }
+    updatePlayerNameInputs(); // Initialize player name inputs
+}
+
+
+
+
+
+
+
