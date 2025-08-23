@@ -97,6 +97,18 @@ function handleCanvasClick(event) {
         }
     }
 
-
-
+    if (lineDrawn) {
+        const boxesFormed = checkForBoxes();
+        if (gameMode === 'online') {
+            updateOnlineGameState(lineType, lineRow, lineCol, boxesFormed > 0);
+        } else {
+            if (boxesFormed === 0) {
+                switchPlayer();
+            }
+            updateScoreDisplays();
+            updatePlayerTurnDisplay();
+            drawGame();
+            checkGameOver();
+        }
+    }
 }
