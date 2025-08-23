@@ -51,5 +51,26 @@ function handleCanvasClick(event) {
     let lineRow, lineCol;
     const currentPlayerNumber = currentPlayerIndex + 1; // 1-based player number
 
+    // Check for horizontal lines
+    for (let r = 0; r < numRows; r++) {
+        for (let c = 0; c < numCols - 1; c++) {
+            const lineX1 = padding + c * cellSize;
+            const lineY = padding + r * cellSize;
+            const lineX2 = padding + (c + 1) * cellSize;
+
+            if (mouseX > lineX1 + dotRadius && mouseX < lineX2 - dotRadius &&
+                Math.abs(mouseY - lineY) < cellSize / 4) {
+                if (horizontalLines[r][c] === 0) {
+                    horizontalLines[r][c] = currentPlayerNumber;
+                    lineDrawn = true;
+                    lineType = 'h';
+                    lineRow = r;
+                    lineCol = c;
+                    break;
+                }
+            }
+        }
+        if (lineDrawn) break;
+    }
 
 }
