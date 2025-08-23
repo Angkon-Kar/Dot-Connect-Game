@@ -224,5 +224,17 @@ async function joinOnlineGame(gameId) {
 }
 window.joinOnlineGame = joinOnlineGame;
 
+async function watchOnlineGame(gameId) {
+    if (!window.firebaseDb || !getUserId()) {
+        showCustomAlert("Firebase not initialized or user not authenticated. Please wait.");
+        return;
+    }
+    onlineGameId = gameId;
+    onlinePlayerNumber = 0; // 0 indicates spectator mode
+    showGameBoard();
+    listenToOnlineGame(gameId);
+}
+window.watchOnlineGame = watchOnlineGame;
+
 
 
