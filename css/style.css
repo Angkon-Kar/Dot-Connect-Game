@@ -53,3 +53,13 @@ canvas {
     margin-right: 8px;
     display: inline-block;
 }
+
+.button-primary {
+    background-color: #10b981; /* Emerald green */
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
