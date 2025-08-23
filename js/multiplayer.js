@@ -303,5 +303,41 @@ function listenToOnlineGame(gameId) {
 }
 
 
+async function updateOnlineGameState(lineType, r, c, madeBox) {
+    if (!onlineGameId || !window.firebaseDb || onlinePlayerNumber === 0) return; // Don't allow spectators to make moves
+
+    const gameDocRef = doc(window.firebaseDb, `artifacts/${window.appId}/public/data/games`, onlineGameId);
+
+    let newPlayerIndex = currentPlayerIndex;
+    if (!madeBox) {
+        newPlayerIndex = (newPlayerIndex + 1) % players.length;
+    }
+
+    // Update scores in the local players array
+    players[currentPlayerIndex].score = players[currentPlayerIndex].score; // Ensure score is updated
+
+    const updates = {
+        players: JSON.stringify(players), // Send updated players array
+        currentPlayerIndex: newPlayerIndex,
+        lastMoveBy: getUserId(),
+        lastUpdated: new Date().toISOString()
+    };
+
+    if (lineType === 'h') {
+        updates.horizontalLines = JSON.stringify(horizontalLines);
+    } else {
+        updates.verticalLines = JSON.stringify(verticalLines);
+    }
+    updates.boxes = JSON.stringify(boxes);
+
+    try {
+        await updateDoc(gameDocRef, updates);
+        checkGameOver(); // Check game over locally, will sync via snapshot
+    } catch (e) {
+        console.error("Error updating online game state:", e);
+        showCustomAlert("Failed to update game state. Check your connection.");
+    }
+}
+
 
 
