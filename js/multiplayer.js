@@ -339,5 +339,54 @@ async function updateOnlineGameState(lineType, r, c, madeBox) {
     }
 }
 
+async function leaveOnlineGame() {
+    if (!onlineGameId || !window.firebaseDb || !getUserId()) return;
 
+    const gameDocRef = doc(window.firebaseDb, `artifacts/${window.appId}/public/data/games`, onlineGameId);
+    try {
+        const gameDoc = await getDoc(gameDocRef);
+        if (gameDoc.exists()) {
+            const gameData = gameDoc.data();
+            let currentPlayers = JSON.parse(gameData.players);
+            let playerLeft = false;
+
+            // Find and remove the current user from the players array
+            for (let i = 0; i < currentPlayers.length; i++) {
+                if (currentPlayers[i].id === getUserId()) {
+                    currentPlayers[i].id = null; // Mark slot as empty
+                    currentPlayers[i].name = `Player ${i + 1}`; // Reset name
+                    playerLeft = true;
+                    break;
+                }
+            }
+
+            if (playerLeft) {
+                const remainingPlayersCount = currentPlayers.filter(p => p.id !== null).length;
+                let newStatus = gameData.status;
+                if (remainingPlayersCount < 2) { // If less than 2 players remain, game cannot continue
+                    newStatus = 'finished';
+                } else if (gameData.status === 'active' && remainingPlayersCount < gameData.numPlayers) {
+                    newStatus = 'waiting'; // If active and now has empty slots, go back to waiting
+                }
+
+                await updateDoc(gameDocRef, {
+                    players: JSON.stringify(currentPlayers),
+                    currentPlayersCount: remainingPlayersCount,
+                    status: newStatus,
+                    lastUpdated: new Date().toISOString()
+                });
+            }
+        }
+    } catch (e) {
+        console.error("Error leaving online game:", e);
+    } finally {
+        if (unsubscribeSnapshot) {
+            unsubscribeSnapshot();
+            unsubscribeSnapshot = null;
+        }
+        onlineGameId = null;
+        onlinePlayerNumber = null;
+        gameActive = false;
+    }
+}
 
