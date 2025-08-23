@@ -60,6 +60,15 @@ function updatePlayerNameInputs() {
     }
 }
 
+function showGameBoard() {
+    hideAllScreens();
+    document.getElementById('gameBoard').classList.remove('hidden');
+    gameActive = true;
+    resizeCanvas();
+    canvas.removeEventListener('pointerdown', handleCanvasClick);
+    canvas.addEventListener('pointerdown', handleCanvasClick);
+    drawGame();
+}
 
 
 
