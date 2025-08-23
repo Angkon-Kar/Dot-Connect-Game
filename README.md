@@ -1,6 +1,14 @@
 # Dot Connect Game
 
-![Dot Connect Game Banner](assets/home.png)
+![Dot Connect Game Banner](assets/Home_Page.png)
+![Dot Connect Game Banner](assets/Local_Multiplayer_Setup_1.png)
+![Dot Connect Game Banner](assets/Local_Multiplayer_Game_Board_1.png)
+![Dot Connect Game Banner](assets/Local_Multiplayer_Setup_2.png)
+![Dot Connect Game Banner](assets/Local_Multiplayer_Game_Board_2.png)
+![Dot Connect Game Banner](assets/Online_Lobby.png)
+![Dot Connect Game Banner](assets/Ai_Game.png)
+![Dot Connect Game Banner](assets/Ai_Game_Board.png)
+![Dot Connect Game Banner](assets/Win1.png)
 ## About the Project
 
 This is a modern, web-based version of the classic childhood game, Dot Connect (also known as Dots and Boxes). The project is built to showcase a full-stack, real-time multiplayer experience. Players can enjoy local games, challenge an AI, or compete against friends online in a real-time multiplayer lobby.
