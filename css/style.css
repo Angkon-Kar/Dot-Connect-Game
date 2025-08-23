@@ -85,3 +85,8 @@ canvas {
     text-align: center;
 }
 
+.lobby-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
