@@ -62,6 +62,7 @@ function updatePlayerNameInputs() {
 
 function showGameBoard() {
     hideAllScreens();
+    
     document.getElementById('gameBoard').classList.remove('hidden');
     gameActive = true;
     resizeCanvas();
