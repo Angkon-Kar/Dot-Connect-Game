@@ -17,3 +17,7 @@ async function showOnlineLobby() {
     }
 }
 
+document.getElementById('createGameButton').addEventListener('click', createOnlineGame);
+document.getElementById('refreshGamesButton').addEventListener('click', fetchAvailableGames);
+
+
