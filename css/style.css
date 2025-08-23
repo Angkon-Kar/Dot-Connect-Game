@@ -102,3 +102,8 @@ canvas {
     font-weight: bold;
     color: #4a5568;
 }
+
+.lobby-table tbody tr:nth-child(even) {
+    background-color: #f7fafc;
+}
+
