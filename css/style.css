@@ -63,3 +63,8 @@ canvas {
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.button-primary:hover {
+    background-color: #059669; /* Darker emerald */
+    transform: translateY(-1px);
+}
