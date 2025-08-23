@@ -11,3 +11,17 @@ function hideAllScreens() {
         unsubscribeSnapshot = null;
     }
 }
+
+function showModeSelectionScreen() {
+    hideAllScreens();
+    document.getElementById('modeSelection').classList.remove('hidden');
+    gameActive = false;
+    canvas.removeEventListener('pointerdown', handleCanvasClick);
+    const currentUserIdDisplay = document.getElementById('currentUserId');
+    if (window.isAuthReady()) {
+        currentUserIdDisplay.textContent = `Your ID: ${getUserId()}`;
+    } else {
+        currentUserIdDisplay.textContent = `Your ID: Loading...`;
+    }
+}
+
