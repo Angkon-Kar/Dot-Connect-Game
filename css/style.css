@@ -46,7 +46,7 @@ canvas {
 .player-text-3 { color: #22c55e; }
 .player-text-4 { color: #a855f7; }
 
-.player-turn-indecator{
+.player-turn-indicator {
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -126,4 +126,3 @@ canvas {
         justify-content: center;
     }
 }
-
