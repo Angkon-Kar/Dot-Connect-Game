@@ -39,5 +39,17 @@ function handleCanvasClick(event) {
         return;
     }
 
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const mouseX = (event.clientX - rect.left) * scaleX;
+    const mouseY = (event.clientY - rect.top) * scaleY;
+
+    let lineDrawn = false;
+    let lineType = null;
+    let lineRow, lineCol;
+    const currentPlayerNumber = currentPlayerIndex + 1; // 1-based player number
+
 
 }
