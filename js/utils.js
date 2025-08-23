@@ -73,4 +73,30 @@ function handleCanvasClick(event) {
         if (lineDrawn) break;
     }
 
+
+    // Check for vertical lines
+    if (!lineDrawn) {
+        for (let r = 0; r < numRows - 1; r++) {
+            for (let c = 0; c < numCols; c++) {
+                const lineX = padding + c * cellSize;
+                const lineY1 = padding + r * cellSize;
+                const lineY2 = padding + (r + 1) * cellSize;
+
+                if (mouseY > lineY1 + dotRadius && mouseY < lineY2 - dotRadius &&
+                    Math.abs(mouseX - lineX) < cellSize / 4) {
+                    if (verticalLines[r][c] === 0) {
+                        verticalLines[r][c] = currentPlayerNumber;
+                        lineDrawn = true;
+                        lineType = 'v';
+                        lineRow = r;
+                        lineCol = c;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+
+
 }
