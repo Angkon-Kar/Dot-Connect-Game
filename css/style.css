@@ -68,3 +68,8 @@ canvas {
     background-color: #059669; /* Darker emerald */
     transform: translateY(-1px);
 }
+
+.button-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
