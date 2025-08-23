@@ -7,20 +7,20 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="assets/dotimage.png" type="png">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    <!-- Mode selection Screen -->
-     <div id="modeSelection" class="game-container flex flex-col items-center space-y-6">
+
+    <!-- Mode Selection Screen -->
+    <div id="modeSelection" class="game-container flex flex-col items-center space-y-6">
         <h1 class="text-4xl font-bold text-gray-800 mb-6">Dot Connect</h1>
         <p id="currentUserId" class="text-sm text-gray-600 mb-4">Your ID: Loading...</p>
 
         <button id="localPlayButton" class="button-primary w-full max-w-xs">Local Multiplayer</button>
         <button id="onlinePlayButton" class="button-primary w-full max-w-xs">Online Multiplayer</button>
         <button id="aiPlayButton" class="button-primary w-full max-w-xs">Player vs AI</button>
-     </div>
-    
+    </div>
+
     <!-- Game Setup Screen (for Local and AI) -->
     <div id="gameSetup" class="game-container hidden flex-col items-center space-y-6">
         <h1 class="text-4xl font-bold text-gray-800 mb-6" id="setupTitle">Local Game Setup</h1>
@@ -75,6 +75,7 @@
             </div>
             <button id="createGameButton" class="button-primary w-full max-w-xs">Create Game</button>
         </div>
+
         <button id="refreshGamesButton" class="button-primary bg-blue-500 hover:bg-blue-600 w-full max-w-xs">Refresh Games</button>
 
         <h2 class="text-2xl font-semibold text-gray-700 mt-6">Available Games</h2>
@@ -133,11 +134,12 @@
         </div>
     </div>
 
-    <script src="js/game.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/multiplayer.js"></script>
-
-
+    <!-- Import all JavaScript modules -->
+    <script type="module" src="./js/utils.js"></script>
+    <script type="module" src="./js/auth.js"></script>
+    <script type="module" src="./js/game.js"></script>
+    <script type="module" src="./js/ai.js"></script>
+    <script type="module" src="./js/multiplayer.js"></script>
+    <script type="module" src="./js/script.js"></script>
 </body>
 </html>
