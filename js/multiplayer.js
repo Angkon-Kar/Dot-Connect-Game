@@ -155,4 +155,74 @@ async function fetchAvailableGames() {
 window.fetchAvailableGames = fetchAvailableGames;
 
 
+async function joinOnlineGame(gameId) {
+    if (!window.firebaseDb || !getUserId()) {
+        showCustomAlert("Firebase not initialized or user not authenticated. Please wait.");
+        return;
+    }
+
+    const gameDocRef = doc(window.firebaseDb, `artifacts/${window.appId}/public/data/games`, gameId);
+    try {
+        const gameDoc = await getDoc(gameDocRef);
+        if (!gameDoc.exists()) {
+            showCustomAlert("Game not found or already started.");
+            fetchAvailableGames();
+            return;
+        }
+        const gameData = gameDoc.data();
+        let currentPlayers = JSON.parse(gameData.players);
+
+        if (gameData.status !== 'waiting') {
+            showCustomAlert("This game has already started or finished.");
+            fetchAvailableGames();
+            return;
+        }
+
+        // Find the first empty slot
+        let joinedPlayerIndex = -1;
+        for (let i = 0; i < currentPlayers.length; i++) {
+            if (currentPlayers[i].id === null) {
+                currentPlayers[i].id = getUserId();
+                currentPlayers[i].name = `Player_${getUserId().substring(0, 6)}`;
+                joinedPlayerIndex = i;
+                break;
+            }
+        }
+
+        if (joinedPlayerIndex === -1) {
+            showCustomAlert("This game is full.");
+            fetchAvailableGames();
+            return;
+        }
+
+        const newPlayersCount = currentPlayers.filter(p => p.id !== null).length;
+        const newStatus = (newPlayersCount === gameData.numPlayers) ? 'active' : 'waiting';
+
+        await updateDoc(gameDocRef, {
+            players: JSON.stringify(currentPlayers),
+            currentPlayersCount: newPlayersCount,
+            status: newStatus
+        });
+
+        onlineGameId = gameId;
+        onlinePlayerNumber = joinedPlayerIndex + 1; // 1-based index
+        players = currentPlayers; // Update local players array
+
+        numRows = gameData.gridRows;
+        numCols = gameData.gridCols;
+        horizontalLines = JSON.parse(gameData.horizontalLines);
+        verticalLines = JSON.parse(gameData.verticalLines);
+        boxes = JSON.parse(gameData.boxes);
+        currentPlayerIndex = gameData.currentPlayerIndex;
+
+        showGameBoard();
+        listenToOnlineGame(gameId);
+    } catch (e) {
+        console.error("Error joining game:", e);
+        showCustomAlert("Failed to join game. Please try again.");
+    }
+}
+window.joinOnlineGame = joinOnlineGame;
+
+
 
