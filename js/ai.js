@@ -40,6 +40,58 @@ function makeAIMove() {
         }
     }
 
+    // Strategy 2: Block opponent from completing a box (only considers next human player)
+    if (!bestMove) {
+        const nextHumanPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        let potentialOpponent = players[nextHumanPlayerIndex];
+        if (potentialOpponent.name === 'Computer') { // Skip if next is also AI
+            potentialOpponent = players[(nextHumanPlayerIndex + 1) % players.length];
+        }
+        if (potentialOpponent.name !== 'Computer') { // Only block if next is human
+            for (const move of availableMoves) {
+                const tempH = JSON.parse(JSON.stringify(horizontalLines));
+                const tempV = JSON.parse(JSON.stringify(verticalLines));
+                
+                if (move.type === 'h') {
+                    tempH[move.r][move.c] = currentPlayerIndex + 1;
+                } else {
+                    tempV[move.r][move.c] = currentPlayerIndex + 1;
+                }
+
+                let opponentCanScoreNext = false;
+                for (let r = 0; r < numRows - 1; r++) {
+                    for (let c = 0; c < numCols - 1; c++) {
+                        if (boxes[r][c] === 0) { // If box is unowned
+                            const top = tempH[r] && tempH[r][c];
+                            const bottom = tempH[r + 1] && tempH[r + 1][c];
+                            const left = tempV[r] && tempV[r][c];
+                            const right = tempV[r] && tempV[r][c + 1];
+
+                            let drawnSides = 0;
+                            if (top !== 0) drawnSides++;
+                            if (bottom !== 0) drawnSides++;
+                            if (left !== 0) drawnSides++;
+                            if (right !== 0) drawnSides++;
+
+                            if (drawnSides === 3) { // If only one side is missing, opponent can score
+                                opponentCanScoreNext = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (opponentCanScoreNext) break;
+                }
+
+                if (!opponentCanScoreNext) {
+                    bestMove = move; // This move doesn't set up opponent for a score
+                    break;
+                }
+            }
+        }
+    }
+
+
+
 
 
 }
