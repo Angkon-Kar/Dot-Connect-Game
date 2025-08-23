@@ -91,7 +91,29 @@ function makeAIMove() {
     }
 
 
+    // Strategy 3: Make a random valid move if no strategic move found
+    if (!bestMove && availableMoves.length > 0) {
+        bestMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
+    }
 
+    if (bestMove) {
+        // Apply the chosen move
+        if (bestMove.type === 'h') {
+            horizontalLines[bestMove.r][bestMove.c] = currentPlayerIndex + 1;
+        } else {
+            verticalLines[bestMove.r][bestMove.c] = currentPlayerIndex + 1;
+        }
 
+        const boxesFormed = checkForBoxes();
+        if (boxesFormed === 0) {
+            switchPlayer();
+        }
+        updateScoreDisplays();
+        updatePlayerTurnDisplay();
+        drawGame();
+        checkGameOver();
+    } else {
+        console.warn("AI could not find a move. This should not happen if game is not over.");
+    }
 
 }
