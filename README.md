@@ -1,6 +1,4 @@
 # Dot Connect Game
-
-
 ![Dot Connect Game Banner](assets/Home_Page.png)
 ![Dot Connect Game Banner](assets/Local_Multiplayer_Setup_1.png)
 ![Dot Connect Game Banner](assets/Local_Multiplayer_Game_Board_1.png)
